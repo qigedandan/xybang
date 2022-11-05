@@ -1,0 +1,26 @@
+<script setup>
+// This starter template is using Vue 3 <script setup> SFCs
+// Check out https://vuejs.org/api/sfc-script-setup.html#script-setup
+
+import{ useRouter, useRoute} from 'vue-router'
+import Menu from './components/Menu.vue'
+
+
+const router = useRouter()
+const route = useRoute()
+
+
+
+</script>
+
+<template>
+  <Menu></Menu>
+  <router-view></router-view>
+</template>
+
+
+
+<style scoped>
+
+
+</style>
