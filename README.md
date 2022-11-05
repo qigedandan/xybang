@@ -1,7 +1,51 @@
-# Vue 3 + Vite
+## 校园帮项目(前端)
 
-This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+* 最近进行的一个大创项目
+* 主要的功能是校园论坛，或者类似树洞和贴吧的一个小社区
 
-## Recommended IDE Setup
+## 概念
 
-- [VS Code](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar)
+为各大高校提供一个学生交流平台，方便学生进行社交，恋爱，交友，约会，信息查询。
+
+## 需求 功能
+
+收集学校信息进行展示，让同学们有一个更加方便的信息查询平台。
+
+社交功能，可以交友，恋爱。
+
+论坛功能，可以吐槽，八卦，提问，二手交易。
+
+实时聊天？私信功能 私信转发提醒
+
+学习功能：学习组队聊天室，学习打卡地，可以设置考研分享，四六级分享，雅思托福分享，期末资料分享，出国留学分享，就业内推分享，学长经验分享。
+
+活动发布咨询：可以帮助宣传校园活动，晚会，发布兼职信息，求职信息，企业招聘信息
+
+资源共享：网盘分享，自愿分享
+
+## 特点
+
+1. 多平台使用，数据互通
+2. 学习功能，组队
+3. 资源分享
+4. 多主题论坛 学习 游戏 八卦 交友 原神
+5. 私信功能
+6. 管理员功能
+7. 分享功能
+
+## 数据库设计
+
+1. 用户信息 ：用户名id，密码，手机号，邮箱
+2. 管理员信息
+3. 文章信息：标题 内容 主题 作者-->用户id 点赞 浏览量 评论数
+4. 评论：内容 作者 对应帖子 对应评论
+5. 回复评论：
+6. 私信信息：内容 需要讨论
+
+7. 板块管理员
+8. 资料分享
+
+## 公共信息公开信息
+
+1. 学校信息
+2. 老师信息
