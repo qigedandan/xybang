@@ -3,6 +3,8 @@ import { ref, computed, reactive } from 'vue'
 import { Icon } from 'tdesign-icons-vue-next';
 import { MessagePlugin } from 'tdesign-vue-next';
 import Http from '../api/config'
+import { useRouter } from 'vue-router';
+
 const form = ref(null)
 const showTab = ref(1)
 const isShow = computed(() => {
@@ -88,23 +90,27 @@ const onSubmit = async ({ validateResult, firstError, e }, method) => {
   }
 };
 
-
+const router = useRouter()
+const edit = ()=>{
+  router.push('/edit')
+}
 </script>
 <template>
   <!-- 菜单栏 -->
   <div class="menu">
     <t-affix ref="affix" :offset-top="0" style="width: 100%;">
-      <div style="width: 100%;background-color: white;display: flex;justify-content: center;">
+      <div style="width: 100%;background-color: white;display: flex;justify-content: center;border-bottom:1px solid #efefef">
         <t-head-menu v-model="menu1Value" width="100%" theme="light" @change="changeHandler" style="max-width: 1280px;">
           <template #logo>
             <img width="136" height='64' src="https://tu.my/i/2022/11/02/63622f8be07b3.png" alt="logo" @click="init" />
           </template>
-          <t-menu-item value="item1">
-            <router-link to="/">首页</router-link>
+          <t-menu-item value="item1" @click="router.push('/')">
+            首页
           </t-menu-item>
           <t-menu-item value="item2"> 信息公告 </t-menu-item>
           <t-menu-item value="item3"> 论坛 </t-menu-item>
-          <t-menu-item value="item4"> 学习 </t-menu-item>
+          <t-menu-item value="item4" @click="router.push('/center')"> 学习
+             </t-menu-item>
 
           <template #operations>
             <div class="operations">
@@ -113,7 +119,7 @@ const onSubmit = async ({ validateResult, firstError, e }, method) => {
                 <t-button>搜索</t-button>
               </div>
               <t-avatar size="40px" id="design" @click="design" style="cursor:pointer">{{ avater_name }}</t-avatar>
-              <t-button shape="round" size="large" variant="text" style="background-color: #fc5531;color: aliceblue;">发布
+              <t-button shape="round" size="large" variant="text" style="background-color: #fc5531;color: white;" @click="edit">发布
               </t-button>
             </div>
           </template>
