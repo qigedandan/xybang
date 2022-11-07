@@ -21,7 +21,7 @@ const routes = [
         component: Area,
     },
     {
-        path: '/article',
+        path: '/article/:id',
         component: Article,
     },
     {

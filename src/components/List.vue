@@ -2,9 +2,11 @@
 import { ref, onMounted } from "vue";
 import Http from "../api/config";
 import { Icon } from "tdesign-icons-vue-next";
+import { useRouter } from "vue-router";
 
 const value1 = ref("first");
 const list = ref([]);
+const router = useRouter()
 
 const init = async () => {
   const res = await Http.get("/hot");
@@ -26,13 +28,12 @@ onMounted(async () => {
   <div class="list">
     <t-list :split="true">
       <t-list-item v-for="item in list">
-        <!-- <t-list-item-meta id="text" :title=item.title :description=item.content /> -->
         <template #content>
           <div class="list-content">
-            <div class="title">
-              {{ item.title }}
+            <div class="title" style="cursor: pointer;" @click="router.push(`/article/${item.id}`)">
+              {{ item.title }} 
             </div>
-            <div style="color: #555666">
+            <div style="color: #555666;cursor: pointer;" @click="router.push(`/article/${item.id}`)">
               {{ item.mini_content }}
             </div>
             <div class="button">
@@ -50,13 +51,13 @@ onMounted(async () => {
               </t-button>
               <t-button variant="text" class="right_button">
                 <icon name="chat" size="large" />
-                {{ item.comment }}
+                {{ item.comment_num }}
               </t-button>
               <t-avatar
-                image="https://tdesign.gtimg.com/site/avatar.jpg"
+                :image="item.avatar"
                 size="small"
               />
-              <span style="color: #555666"> {{ " " + item.username }}</span>
+              <span style="color: #555666"> {{ " " + item.author }}</span>
             </div>
           </div>
         </template>
@@ -85,4 +86,5 @@ onMounted(async () => {
   text-align: left;
   max-width: 1138px-181px;
 }
+
 </style>

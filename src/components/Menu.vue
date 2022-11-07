@@ -1,9 +1,12 @@
 <script setup>
-import { ref, computed, reactive } from 'vue'
+import { ref, computed, reactive,onMounted } from 'vue'
 import { Icon } from 'tdesign-icons-vue-next';
 import { MessagePlugin } from 'tdesign-vue-next';
 import Http from '../api/config'
 import { useRouter } from 'vue-router';
+
+
+
 
 const form = ref(null)
 const showTab = ref(1)
@@ -16,8 +19,18 @@ const isShow = computed(() => {
 })
 
 const visible = ref(false)
-const avater_img = ref('')
-const avater_name = ref('登录')
+const avatar_img = ref('')
+const avatar_name = ref('登录')
+onMounted(()=>{
+  const name =localStorage.getItem('username')
+  if(name){
+    avatar_name.value= name
+  }
+  const img = localStorage.getItem('avatar')
+  if(img){
+    avatar_img.value= img
+  }
+})
 const design = () => {
   visible.value = true
 }
@@ -64,10 +77,12 @@ const onSubmit = async ({ validateResult, firstError, e }, method) => {
         MessagePlugin.success("登录成功")
         visible.value = false
         console.log(res.data.data.username)
-        avater_name.value = res.data.data.username
-        if (res.data.data.avater != null) {
-          avater_img.value = res.data.data.avater
-
+        localStorage.setItem('token',res.data.message)
+        avatar_name.value = res.data.data.username
+        localStorage.setItem('username',res.data.data.username)
+        if (res.data.data.avatar != null) {
+          avatar_img.value = res.data.data.avatar
+          localStorage.setItem('avatar',res.data.data.avatar)
         }
       } else {
         MessagePlugin.error(res.data.message)
@@ -94,6 +109,12 @@ const router = useRouter()
 const edit = ()=>{
   router.push('/edit')
 }
+
+const cancellation = ()=>{
+  localStorage.removeItem('token')
+  localStorage.removeItem('username')
+  localStorage.removeItem('avatar')
+}
 </script>
 <template>
   <!-- 菜单栏 -->
@@ -108,17 +129,18 @@ const edit = ()=>{
             首页
           </t-menu-item>
           <t-menu-item value="item2"> 信息公告 </t-menu-item>
-          <t-menu-item value="item3"> 论坛 </t-menu-item>
-          <t-menu-item value="item4" @click="router.push('/center')"> 学习
+          <t-menu-item value="item4" @click="router.push('/center')"> 个人中心
              </t-menu-item>
+          <t-menu-item value="item3" @click="cancellation"> 注销 </t-menu-item>
+
 
           <template #operations>
             <div class="operations">
               <div class="search">
-                <t-input clearable="true" :image="avater_img" placeholder="搜索"></t-input>
+                <t-input clearable="true" placeholder="搜索"></t-input>
                 <t-button>搜索</t-button>
               </div>
-              <t-avatar size="40px" id="design" @click="design" style="cursor:pointer">{{ avater_name }}</t-avatar>
+              <t-avatar  :image="avatar_img" size="40px" id="design" @click="design" style="cursor:pointer">{{ avatar_name }}</t-avatar>
               <t-button shape="round" size="large" variant="text" style="background-color: #fc5531;color: white;" @click="edit">发布
               </t-button>
             </div>
