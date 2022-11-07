@@ -32,7 +32,14 @@ onMounted(()=>{
   }
 })
 const design = () => {
-  visible.value = true
+  const name =localStorage.getItem('username')
+  if(name)
+  {
+    MessagePlugin.success(`尊敬的${name}，您已登录，如需退出请点击注销`)
+  }else{
+    visible.value = true
+
+  }
 }
 
 const formData = reactive({
