@@ -70,7 +70,7 @@ const goToArea = (area)=>{
         <template #footer> {{val.name}} </template>
       </t-card>
     </div>
-    <List />
+    <List method=1 />
 
     <!-- 注册登录弹出框 -->
   </div>

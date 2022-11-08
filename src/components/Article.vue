@@ -5,10 +5,16 @@ import { Icon } from "tdesign-icons-vue-next";
 import Http from '../api/config'
 import { useRoute } from "vue-router";
 import { MessagePlugin } from 'tdesign-vue-next';
+import time from "../time/index"
+import { BrowseIcon } from 'tdesign-icons-vue-next';
+
+
 
 const route = useRoute();
 const articleId = route.params.id;
-const article = ref({})
+const article = ref({
+    pictures:[]
+})
 const commentsData = ref([])
 const my_name = ref(localStorage.getItem('username'))
 const my_avatar = ref(localStorage.getItem('avatar'))
@@ -44,10 +50,11 @@ const comment = reactive({
     content:'',
     post_id:'',
     parent:0,
+    replyto:''
 })
-const submitReply = async(id)=>{
+const submitReply = async(id,name)=>{
     comment.parent = id
-    console.log(comment.post_id)
+    comment.replyto = name
     const res = await Http.post('/savecomment',comment)
     if (res.data.code == 1) {
         MessagePlugin.success("评论成功")
@@ -58,6 +65,15 @@ const submitReply = async(id)=>{
       }
       
 }
+
+// 图片预览
+
+const visible = ref(false);
+const visible2 = ref(false);
+const visible3 = ref(false);
+const onOpen = () => (visible.value = true);
+const onOpen2 = () => (visible2.value = true);
+const onOpen3 = () => (visible3.value = true);
 </script>
 <template>
     <div class="container">
@@ -90,12 +106,46 @@ const submitReply = async(id)=>{
                         <span>
                             <t-tag theme="warning">楼主</t-tag>
                         </span>
-                        <span style="color:#96999f;font-size: 12px;">{{ article.date }}</span>
+                        <span style="color:#96999f;font-size: 12px;">{{ time.formatTime(article.date) }}</span>
                     </div>
                     <div>
                         {{ article.content }}
+                              <!-- 图片预览器 -->
+
                         <div>
-                            <img :src="article.Cover" />
+                            <div>
+    <t-image-viewer v-if="article.pictures.length>0" :key="img1" v-model:visible="visible" :default-index="0" :images="article.pictures">
+      <template #trigger>
+        <div class="tdesign-demo-image-viewer__ui-image tdesign-demo-image-viewer__base">
+          <img alt="test" :src="article.pictures[0]" class="tdesign-demo-image-viewer__ui-image--img" />
+          <div class="tdesign-demo-image-viewer__ui-image--hover" @click="onOpen">
+            <span><BrowseIcon size="1.4em" /> 预览</span>
+          </div>
+        </div>
+      </template>
+    </t-image-viewer>
+    <t-image-viewer v-if="article.pictures.length>1" :key="1" v-model:visible="visible2" :default-index="1" :images="article.pictures">
+      <template #trigger>
+        <div class="tdesign-demo-image-viewer__ui-image tdesign-demo-image-viewer__base">
+          <img alt="test" :src="article.pictures[1]" class="tdesign-demo-image-viewer__ui-image--img" />
+          <div class="tdesign-demo-image-viewer__ui-image--hover" @click="onOpen2">
+            <span><BrowseIcon size="1.4em" /> 预览</span>
+          </div>
+        </div>
+      </template>
+    </t-image-viewer>
+    <t-image-viewer v-if="article.pictures.length>2" :key="2" v-model:visible="visible3" :default-index="2" :images="article.pictures">
+      <template #trigger>
+        <div class="tdesign-demo-image-viewer__ui-image tdesign-demo-image-viewer__base">
+          <img alt="test" :src="article.pictures[2]" class="tdesign-demo-image-viewer__ui-image--img" />
+          <div class="tdesign-demo-image-viewer__ui-image--hover" @click="onOpen3">
+            <span><BrowseIcon size="1.4em" /> 预览</span>
+          </div>
+        </div>
+      </template>
+    </t-image-viewer>
+  </div>
+
                         </div>
                     </div>
                     <div class="buttons">
@@ -127,7 +177,7 @@ const submitReply = async(id)=>{
                 <template #content>
                     <div class="form-container">
                         <t-textarea v-model="comment.content" placeholder="快来抢热评" />
-                        <t-button class="form-submit" @click="submitReply(0)">回复</t-button>
+                        <t-button class="form-submit" @click="submitReply(0,null)">回复</t-button>
                     </div>
                 </template>
             </t-comment>
@@ -138,7 +188,7 @@ const submitReply = async(id)=>{
             <t-list :split="true">
                 <t-list-item v-for="(item, index) in commentsData" :key="index">
                     <template #content>
-                        <t-comment :avatar="item.avatar" :datetime="item.date"
+                        <t-comment :avatar="item.avatar" :datetime="time.formatTime(item.date)"
                             :content="item.content">
                             <template #author>
 
@@ -159,7 +209,7 @@ const submitReply = async(id)=>{
                             </template>
                             <template v-if="commentPage === index || item.children.length" #reply>
                                 <t-comment v-for="val in item.children"
-                                    :avatar="val.avatar" :datetime="val.date"
+                                    :avatar="val.avatar" :datetime="time.formatTime(val.date)"
                                     :content="val.content">
                                     <template #author>
                                         <t-space :size="4">
@@ -168,8 +218,8 @@ const submitReply = async(id)=>{
                                     <t-tag theme="warning" size="small">楼主</t-tag>
                                 </span>
                                             <t-icon name="caret-right-small" size="small" />
-                                            <span>{{ item.username }}</span>
-                                            <span style="margin-left:5px" v-if="item.username  == article.author">
+                                            <span>{{ val.replyto }}</span>
+                                            <span style="margin-left:5px" v-if="val.replyto  == article.author">
                                     <t-tag theme="warning" size="small">楼主</t-tag>
                                 </span>
                                         </t-space>
@@ -180,7 +230,7 @@ const submitReply = async(id)=>{
                                                 <template #content>
                                                     <div class="form-container">
                                                         <t-textarea v-model="comment.content" placeholder="快来抢热评" />
-                                                        <t-button class="form-submit" @click="submitReply(val.id)">回复</t-button>
+                                                        <t-button class="form-submit" @click="submitReply(item.id,val.username)">回复</t-button>
                                                     </div>
                                                 </template>
                                             </t-comment>
@@ -204,7 +254,7 @@ const submitReply = async(id)=>{
                                         <template #content>
                                             <div class="form-container">
                                                 <t-textarea v-model="comment.content" placeholder="快来抢热评" />
-                                                <t-button class="form-submit" @click="submitReply(item.id)">回复</t-button>
+                                                <t-button class="form-submit" @click="submitReply(item.id,item.username)">回复</t-button>
                                             </div>
                                         </template>
                                     </t-comment>
@@ -256,4 +306,84 @@ const submitReply = async(id)=>{
 .time>span {
     margin-right: 10px;
 }
+
+/* 图片预览器样式 */
+.tdesign-demo-image-viewer__ui-image {
+  width: 100%;
+  height: 100%;
+  display: inline-flex;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  border-radius: var(--td-radius-small);
+  overflow: hidden;
+}
+
+.tdesign-demo-image-viewer__ui-image--hover {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  color: var(--td-text-color-anti);
+  line-height: 22px;
+  transition: 0.2s;
+}
+
+.tdesign-demo-image-viewer__ui-image:hover .tdesign-demo-image-viewer__ui-image--hover {
+  opacity: 1;
+  cursor: pointer;
+}
+
+.tdesign-demo-image-viewer__ui-image--img {
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 100%;
+  cursor: pointer;
+  position: absolute;
+}
+
+.tdesign-demo-image-viewer__ui-image--footer {
+  padding: 0 16px;
+  height: 56px;
+  width: 100%;
+  line-height: 56px;
+  font-size: 16px;
+  position: absolute;
+  bottom: 0;
+  color: var(--td-text-color-anti);
+  background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0) 100%);
+  display: flex;
+  box-sizing: border-box;
+}
+
+.tdesign-demo-image-viewer__ui-image--title {
+  flex: 1;
+}
+
+.tdesign-demo-popup__reference {
+  margin-left: 16px;
+}
+
+.tdesign-demo-image-viewer__ui-image--icons .tdesign-demo-icon {
+  cursor: pointer;
+}
+
+.tdesign-demo-image-viewer__base {
+  width: 160px;
+  height: 160px;
+  margin: 10px;
+  border: 4px solid var(--td-bg-color-secondarycontainer);
+  border-radius: var(--td-radius-medium);
+}
+
+/*    -------- */
+
+
 </style>

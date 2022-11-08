@@ -60,7 +60,7 @@
                 </div>
             </div>
         </t-card>
-        <List />
+        <List :areaName=nowArea.name method=2 />
     </div>
 </template>
 <style scoped>

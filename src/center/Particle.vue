@@ -2,7 +2,7 @@
 import List from '../components/List.vue'
 </script>
 <template>
-    <List />
+    <List method=3 />
 </template>
 <style scoped>
 

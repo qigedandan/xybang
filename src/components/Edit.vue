@@ -16,7 +16,17 @@ const formData = reactive({
     return formData.content
   }),
   content: '',
-  Cover: null,
+  cover: computed(()=>{
+    if(formData.pictures.length>0){
+      return formData.pictures[0]
+    }
+    return null
+  }),
+  pictures:computed(()=>{
+      return files.value.map(item=>{
+      return item.url
+    })
+  })
 });
 
 // 上传图片代码
@@ -33,8 +43,13 @@ const handleFail = ({ file }) => {
 
 const formatRes = (response)=>{
   console.log(response.message)
-  formData.Cover = response.message
   return {url:response.message}
+}
+const imgChange = ()=>{
+  console.log('gaibianhou')
+  console.log(formData.pictures)
+  console.log(formData.cover)
+
 }
 
 
@@ -54,8 +69,11 @@ const submit = async()=>{
   const res = await Http.post('/savepost',formData)
   if (res.data.code == 1) {
         MessagePlugin.success("发布成功")
+        console.log(res)
+
       } else {
         MessagePlugin.error(res.data.message)
+        console.log(res)
       }
 }
 </script>
@@ -88,7 +106,7 @@ const submit = async()=>{
       v-model="files"
       action="http://121.4.57.111:8086/upload"
       theme="image"
-      tips="允许选择多张图片文件上传，最多只能上传 1 张图片"
+      tips="允许选择多张图片文件上传，最多只能上传 3 张图片，第一张作为封面"
       accept="image/*"
       :headers={Token:Token}
       :abridge-name="[6, 6]"
@@ -97,7 +115,8 @@ const submit = async()=>{
       :upload-all-files-in-one-request="uploadAllFilesInOneRequest"
       :formatResponse="formatRes"
       multiple
-      :max="1"
+      :max="3"
+      @change="imgChange"
       @fail="handleFail"
     ></t-upload>      </t-form-item>
       <t-form-item>

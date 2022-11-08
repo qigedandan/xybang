@@ -6,7 +6,6 @@ import { useRouter } from "vue-router";
 import time from "../time/index"
 
 const props = defineProps({
-  method: Number,
   areaName: String
 })
 
@@ -14,29 +13,15 @@ const value1 = ref("first");
 const list = ref([]);
 const router = useRouter()
 
-const init = async () => {
-  if(props.method == 1){
-    const res = await Http.get("/hot");
-    list.value = res.data.data;
 
-  }
-  if(props.method == 2){
-    const res = await Http.post('/subarea',{
+const init = async () => {
+  console.log(props.areaName)
+  const res = await Http.post('/subarea',{
     subarea:props.areaName,
     page:0,
     pagesize:100
   });
   list.value = res.data.data;
-
-  }
-  if(props.method == 3){
-    const res = await Http.post('/myposts',{
-    page:0,
-    pagesize:100
-  });
-  list.value = res.data.data;
-
-  }
 };
 
 onMounted(async () => {
@@ -89,11 +74,11 @@ onMounted(async () => {
             </div>
           </div>
         </template>
-        <template v-if="item.cover" #action>
+        <template #action>
           <t-image
-            :src=(item.cover)
+            src="https://tu.my/i/2022/11/02/63623f750e70b.png"
             fit="contain"
-            style="height:80px;border: 1px solid #efefef;"
+            :style="{ height: '80px' }"
           />
         </template>
       </t-list-item>
