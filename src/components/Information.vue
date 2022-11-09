@@ -17,37 +17,37 @@ const router = useRouter()
         </div>
         <ul class="list-content">
             <li class="list-item">
-              <img src="photo/zhiding.png" style="width:40px;margin-left: 20px;" />
+              <img src="/photo/zhiding.png" style="width:40px;margin-left: 20px;" />
                 <a href="https://www.ujs.edu.cn/info/1062/31829.htm" target="_blank"  class="post-link" >
                     省政府参事调研组来校调研</a>
             </li>
             <li class="list-item">
-              <img src="photo/zhiding.png" style="width:40px;margin-left: 20px;" />
+              <img src="/photo/zhiding.png" style="width:40px;margin-left: 20px;" />
                 <a href="https://www.ujs.edu.cn/info/1062/31809.htm"  target="_blank" class="post-link" >
                     全国大学生先进成图技术与产品信息建模创新大赛举办</a>
             </li>
             <li class="list-item">
-              <img src="photo/zhiding.png" style="width:40px;margin-left: 20px;" />
+              <img src="/photo/zhiding.png" style="width:40px;margin-left: 20px;" />
                 <a href="https://www.ujs.edu.cn/info/1062/31789.htm"  target="_blank"  class="post-link" >
                     我校应邀参加中国农业工程学会农业水土工程专业...</a>
             </li>
             <li class="list-item">
               <div style="width: 40px;margin-left: 20px;">
-                <img src="photo/baokuan.png" style="width:25px" />
+                <img src="/photo/baokuan.png" style="width:25px" />
               </div>
                 <a href="https://www.ujs.edu.cn/info/1062/31769.htm"  target="_blank"  class="post-link">
                     校田径队在省运会高校赛中实现大满贯</a>
             </li>
             <li class="list-item">
               <div style="width: 40px;margin-left: 20px;">
-                <img src="photo/baokuan.png" style="width:25px" />
+                <img src="/photo/baokuan.png" style="width:25px" />
               </div>
                 <a href="https://www.ujs.edu.cn/info/1062/31729.htm"  target="_blank"  class="post-link">
                     新型国产高速犁在新疆试验成功</a>
             </li>
             <li class="list-item">
               <div style="width: 40px;margin-left: 20px;">
-                <img src="photo/baokuan.png" style="width:25px" />
+                <img src="/photo/baokuan.png" style="width:25px" />
               </div>                <a href="https://www.ujs.edu.cn/info/1062/31829.htm"  target="_blank"  class="post-link" >
                     省政府参事调研组来校调研</a>
             </li>
