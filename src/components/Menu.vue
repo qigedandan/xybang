@@ -135,7 +135,7 @@ const cancellation = ()=>{
           <t-menu-item value="item1" @click="router.push('/')">
             首页
           </t-menu-item>
-          <t-menu-item value="item2"> 信息公告 </t-menu-item>
+          <t-menu-item value="item2" @click="router.push('/information')" > 信息公告 </t-menu-item>
           <t-menu-item value="item4" @click="router.push('/center')"> 个人中心
              </t-menu-item>
           <t-menu-item value="item3" @click="cancellation"> 注销 </t-menu-item>

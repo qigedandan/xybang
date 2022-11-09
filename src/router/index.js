@@ -9,13 +9,17 @@ import Particle from '../center/Particle.vue'
 import Pattention from '../center/Pattention.vue'
 import Pcollection from '../center/Pcollection.vue'
 import Pdata from '../center/Pdata.vue'
+import Information from '../components/Information.vue'
 
 const routes = [
     {
         path: '/',
         component: Home,
     },
-    
+    {
+        path: '/Information',
+        component: Information,
+    },
     {
         path: '/area/:id',
         component: Area,
