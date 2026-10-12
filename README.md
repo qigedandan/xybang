@@ -1,4 +1,36 @@
-## 校园帮项目(前端)
+# 校园帮 · 前端
+
+大学生创新创业训练计划（大创）项目的前端原型：校园论坛/树洞方向的学生社区，覆盖信息查询、交友、学习组队、活动发布、资源共享等设想场景。
+
+**当前状态**：前端原型阶段（2022-11 开发 5 天，10 次提交）。页面、路由、组件、接口调用都跑通了，后端只做到用户注册/登录（见 [xyb-back](https://github.com/qigedandan/xyb-back)），论坛/私信等主体功能还是需求状态、没有实现。下面「需求 功能」一节是当时的规划原文，写下来对照用。
+
+## 技术栈
+
+Vue 3 + Vite + vue-router + TDesign Vue Next + axios
+
+## 跑起来
+
+```sh
+pnpm install     # 或 npm install
+pnpm dev
+pnpm build
+```
+
+## 页面结构
+
+- `src/components/`：`Home`（首页）、`List` / `SubList`（帖子列表）、`Article`（详情）、`Center`（个人中心）、`Edit`（发帖编辑）、`login2`（登录）、`Menu`（导航）、`Area`、`Information`
+- `src/center/`：`Pdata`（资料）、`Pattention`（关注）、`Pcollection`（收藏）、`Particle`
+- `src/router/index.js` 路由表，`src/api/config.js` 放后端地址（**原来指向作者自己的测试服务器，跑之前改成你自己的**）
+- `public/photo/` 是页面用的配图
+
+## 说明
+
+- 这是个人练习/大创项目，非生产代码：接口地址硬编码、没有状态管理、登录态存在 `localStorage`。
+- 后端接口若不可用，页面仍可浏览，只是数据为空。
+
+---
+
+以下是原始需求文档：
 
 * 最近进行的一个大创项目
 * 主要的功能是校园论坛，或者类似树洞和贴吧的一个小社区
@@ -49,3 +81,7 @@
 
 1. 学校信息
 2. 老师信息
+
+## License
+
+MIT（见 `LICENSE`）。
